@@ -3,11 +3,14 @@
     flake-utils.url = "github:numtide/flake-utils/v1.0.0";
 
     nixpkgs.url = "github:NixOS/nixpkgs/23.11";
+
+    nixos-config.url = "github:a2not/nixos-config/main";
   };
 
   outputs = {
     flake-utils,
     nixpkgs,
+    nixos-config,
     ...
   } @ inputs: let
     systemSettings = {
@@ -32,7 +35,7 @@
 
           modules = [
             ./nixos/vm.nix
-            ./nixos/configuration.nix
+            nixos-config.nixos.configuration.nix
           ];
 
           specialArgs = {

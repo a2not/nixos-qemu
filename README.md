@@ -50,3 +50,10 @@ Simply run `nix run`.
 ```bash
 nix run
 ```
+
+
+## reference
+
+Shout-out to Gabriella439 for awesome works. I learned to build VM on darwin machine in her book.
+
+https://github.com/Gabriella439/nixos-in-production/blob/0.8/manuscript/Setup.md#macos-specific-instructions

@@ -13,18 +13,8 @@
     nixos-config,
     ...
   } @ inputs: let
-    systemSettings = {
-      hostname = "nixos";
-      timezone = "Asia/Tokyo";
-      locale = "en_US.UTF-8";
-      stateVersion = "23.11";
-    };
-
-    userSettings = {
-      username = "a2not";
-      name = "a2not";
-      email = "a2not.dev@gmail.com";
-    };
+    systemSettings = nixos-config.systemSettings;
+    userSettings = nixos-config.userSettings;
   in
     flake-utils.lib.eachDefaultSystem (
       hostSystem: let
@@ -35,7 +25,7 @@
 
           modules = [
             ./nixos/vm.nix
-            nixos-config.nixos.configuration.nix
+            nixos-config.nixosConfigurations
           ];
 
           specialArgs = {

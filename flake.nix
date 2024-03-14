@@ -31,7 +31,7 @@
             system = builtins.replaceStrings ["darwin"] ["linux"] hostSystem;
 
             modules = [
-              ./nixos/vm.nix
+              ./vm
             ];
 
             specialArgs = {

@@ -4,7 +4,10 @@
 
     nixpkgs.url = "github:NixOS/nixpkgs/23.11";
 
-    nixos-config.url = "github:a2not/nixos-config/main";
+    nixos-config = {
+      url = "github:a2not/nixos-config/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {

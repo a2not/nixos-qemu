@@ -3,6 +3,7 @@
   nixpkgs,
   modulesPath,
   hostSystem,
+  systemSettings,
   ...
 }: let
   pkgs = nixpkgs.legacyPackages."${hostSystem}";
@@ -22,4 +23,6 @@ in {
     # TODO: https://github.com/NixOS/nixpkgs/blob/ac2165529b9e8704d87badffa0e84c4f1842e935/nixos/modules/virtualisation/qemu-vm.nix#L397-L420
     # sharedDirectories =
   };
+
+  system.stateVersion = systemSettings.stateVersion;
 }

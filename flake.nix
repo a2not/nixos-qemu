@@ -15,27 +15,30 @@
   } @ inputs: let
     systemSettings = nixos-config.systemSettings;
     userSettings = nixos-config.userSettings;
+
+    systemConfig = nixos-config.nixosConfigurations.system;
   in
     flake-utils.lib.eachDefaultSystem (
       hostSystem: let
         pkgs = nixpkgs.legacyPackages."${hostSystem}";
 
-        machine = nixpkgs.lib.nixosSystem {
-          system = builtins.replaceStrings ["darwin"] ["linux"] hostSystem;
+        machine =
+          systemConfig
+          // nixpkgs.lib.nixosSystem {
+            system = builtins.replaceStrings ["darwin"] ["linux"] hostSystem;
 
-          modules = [
-            ./nixos/vm.nix
-            nixos-config.nixosConfigurations
-          ];
+            modules = [
+              ./nixos/vm.nix
+            ];
 
-          specialArgs = {
-            inherit inputs;
-            inherit hostSystem;
-            inherit nixpkgs;
-            inherit systemSettings;
-            inherit userSettings;
+            specialArgs = {
+              inherit inputs;
+              inherit hostSystem;
+              inherit nixpkgs;
+              inherit systemSettings;
+              inherit userSettings;
+            };
           };
-        };
 
         program = pkgs.writeShellScript "run-vm.sh" ''
           export NIX_DISK_IMAGE=$(mktemp -u -t nixos.qcow2)

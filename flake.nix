@@ -18,30 +18,26 @@
   } @ inputs: let
     systemSettings = nixos-config.systemSettings;
     userSettings = nixos-config.userSettings;
-
-    systemConfig = nixos-config.nixosConfigurations.system;
   in
     flake-utils.lib.eachDefaultSystem (
       hostSystem: let
         pkgs = nixpkgs.legacyPackages."${hostSystem}";
 
-        machine =
-          systemConfig
-          // nixpkgs.lib.nixosSystem {
-            system = builtins.replaceStrings ["darwin"] ["linux"] hostSystem;
+        machine = nixpkgs.lib.nixosSystem {
+          system = builtins.replaceStrings ["darwin"] ["linux"] hostSystem;
 
-            modules = [
-              ./vm
-            ];
+          modules = [
+            ./vm
+          ];
 
-            specialArgs = {
-              inherit inputs;
-              inherit hostSystem;
-              inherit nixpkgs;
-              inherit systemSettings;
-              inherit userSettings;
-            };
+          specialArgs = {
+            inherit inputs;
+            inherit hostSystem;
+            inherit nixpkgs;
+            inherit systemSettings;
+            inherit userSettings;
           };
+        };
 
         # FIX: somehow this makes qcow2 and keys/ directory under nixos-config repo directory
         # doubting the merge of the two results of nixosSystem function call is a bad idea

@@ -17,6 +17,7 @@
     ...
   } @ inputs: let
     systemSettings = nixos-config.systemSettings;
+    userSettings = nixos-config.userSettings;
   in
     flake-utils.lib.eachDefaultSystem (
       hostSystem: let
@@ -27,6 +28,7 @@
 
           modules = [
             ./vm
+            ./vm/configuration.nix
           ];
 
           specialArgs = {
@@ -34,6 +36,7 @@
             inherit hostSystem;
             inherit nixpkgs;
             inherit systemSettings;
+            inherit userSettings;
           };
         };
 

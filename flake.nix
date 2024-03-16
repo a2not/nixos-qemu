@@ -28,7 +28,7 @@
 
           modules = [
             ./vm
-            # ./vm/configuration.nix
+            ./vm/configuration.nix
           ];
 
           specialArgs = {

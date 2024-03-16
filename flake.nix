@@ -28,7 +28,7 @@
 
           modules = [
             ./vm
-            ./vm/configuration.nix
+            # ./vm/configuration.nix
           ];
 
           specialArgs = {
@@ -40,8 +40,6 @@
           };
         };
 
-        # FIX: somehow this makes qcow2 and keys/ directory under nixos-config repo directory
-        # doubting the merge of the two results of nixosSystem function call is a bad idea
         program = pkgs.writeShellScript "run-vm.sh" ''
           export NIX_DISK_IMAGE=$(mktemp -u -t nixos.qcow2)
 
